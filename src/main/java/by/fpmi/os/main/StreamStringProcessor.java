@@ -14,7 +14,7 @@ public class StreamStringProcessor implements StringProcessor {
     @Override
     public List<String> findFrequentStrings(List<String> strings, int n, int threadsCount) {
         ForkJoinPool threadPool = new ForkJoinPool(threadsCount);
-        Map<String, Long> stringFrequency;
+        Map<String, Long> stringFrпequency;
         List<String>res = new ArrayList<>();
         try {
             stringFrequency = threadPool.submit(() -> strings.parallelStream()
