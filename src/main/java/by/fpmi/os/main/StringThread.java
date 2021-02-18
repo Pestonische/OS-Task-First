@@ -9,21 +9,21 @@ import java.util.Map.Entry;
 public class StringThread extends Thread {
 
     private final List<String> strings;
-    private final int from;
+    private final int start;
     private final int size;
     private List<Entry<String, Integer>> result;
 
-    public StringThread(List<String> strings, int from, int size) {
+    public StringThread(List<String> strings, int start, int size) {
         this.strings = strings;
-        this.from = from;
+        this.start = start;
         this.size = size;
     }
 
     @Override
     public void run() {
-        int end = from + size;
+        int end = start + size;
         Map<String, Integer> stringsWithFrequency = new HashMap<>();
-        for (int i = from; i < end; i++) {
+        for (int i = start; i < end; i++) {
             String element = strings.get(i);
             if (!stringsWithFrequency.containsKey(element)) {
                 stringsWithFrequency.put(element, 1);
