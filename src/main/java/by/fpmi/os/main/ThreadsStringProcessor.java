@@ -35,15 +35,12 @@ public class ThreadsStringProcessor implements StringProcessor {
         int size = strings.size();
         List<StringThread> threads = new ArrayList<>();
         int threadBegin = 0;
-        int sliceSize = 0;
         List<Integer> threadSlices = defineSlices(size, threadsCount);
 
-        while (threadBegin < size) {
-            int currentSlice = threadSlices.get(sliceSize);
+        for (var currentSlice : threadSlices) {
             StringThread thread = new StringThread(strings, threadBegin, currentSlice);
             threads.add(thread);
             threadBegin += currentSlice;
-            sliceSize++;
         }
         return threads;
     }

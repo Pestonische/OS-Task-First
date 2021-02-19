@@ -12,14 +12,10 @@ public class StreamStringProcessor implements StringProcessor {
     public List<String> findFrequentStrings(List<String> strings, int n, int threadsCount)
             throws ExecutionException, InterruptedException {
         ForkJoinPool threadPool = new ForkJoinPool(threadsCount);
-        List<String> result = new ArrayList<>();
-        threadPool.submit(() -> strings.parallelStream()
+        return threadPool.submit(() -> strings.parallelStream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())))
-                .get()
-                .entrySet()
-                .stream()
-                .sorted((first, second) -> (int) (second.getValue() - first.getValue()))
-                .forEach(element -> result.add(element.getKey()));
-        return result.subList(0, n);
+                .get().entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .map(element -> element.getKey()).collect(Collectors.toList()).subList(0, n);
     }
 }
